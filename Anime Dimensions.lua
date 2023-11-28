@@ -279,7 +279,7 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
             while wait(1) do
                 spawn(function()
                     if _G.BuyKey == true then
-                        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("MainRemoteFunction"):InvokeServer({[1] = "BuyRaidShopItem",[2] = "Over Heaven Key (2 Per Day)".._G.methodbuy})
+                        game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("BuyRaidShopItem","Over Heaven Key (2 Per Day)")
                     end
                 end)
             end
