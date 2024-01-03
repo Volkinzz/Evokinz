@@ -19,8 +19,8 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
         end
     end
     local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/SmellLikeHacker/IDK/main/GUI56"))()
-    local Window = library:CreateWindow("SLH Hub | ".."AnimeDimensions".." | V1.52")
-    local Tab1 = Window:CreateTab("Main")
+    local Window = library:CreateWindow("Farm Insano")
+    local Tab1 = Window:CreateTab("Farmzada")
 	local Sector1 = Tab1:CreateSector("Farming", "left")
     Sector1:AddDropdown("MapSelection(AutoUpdate!)",MapSelection, false ,false , function(v)
         _G.MapSelection = v
@@ -182,7 +182,7 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
 	end)
 
 	local Sector3 = Tab3:CreateSector("EquipCard", "Right")
-    Sector3:AddToggle("EquipBestCard", false, function(t)
+    Sector3:AddToggle("EquipBestCard(Ruim)", false, function(t)
 		_G.EquipBestCard = t
 	end)
 
@@ -741,8 +741,8 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
                             game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("TeleportToBossRush")
                         elseif _G.BossRush == true and tonumber(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.BossRushFrame.BossRushEntryPassCount.Text) > 0 and _G.RaidOpened == false then
                             game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("TeleportToBossRush")
-                        elseif _G.AutoTraitTokens == true and game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.PlayFrame.Frame.PlayRoomFrame.MapSelectionScrollingFrame["Infinite Mode"].PlayerReq.Text == "Trait Tokens Available" and game.Players.LocalPlayer.leaderstats.Level.Value >= 20 and _G.RaidOpened == false then
-                            game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("CreateRoom",{["Difficulty"] = "Infinite",["FriendsOnly"] = _G.FriendOnly,["MapName"] = "Infinite Mode",["Hardcore"] = false})
+                        elseif _G.AutoTraitTokens == true and _G.RaidOpened == false then
+                            game:GetService("TeleportService"):Teleport(6990129309)
                         elseif _G.AutoSpeedRaid == true and game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.PlayButtonsFrame.Frame.SpeedRaidBanner.SpeedRaidBannerOpenText.Text == "Ready to enter" and _G.RaidOpened == false then
                             for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.SpeedRaidCharacterSelector.Shade.SpeedRaidCharacterInventoryScrollingFrame:GetChildren()) do
                                 if v.ClassName == "ImageButton" then
@@ -762,8 +762,8 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
                             game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("TeleportToBossRush")
                         elseif _G.BossRush == true and tonumber(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.BossRushFrame.BossRushEntryPassCount.Text) > 0 then
                             game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("TeleportToBossRush")
-                        elseif _G.AutoTraitTokens == true and game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.PlayFrame.Frame.PlayRoomFrame.MapSelectionScrollingFrame["Infinite Mode"].PlayerReq.Text == "Trait Tokens Available" and game.Players.LocalPlayer.leaderstats.Level.Value >= 20 then
-                            game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("CreateRoom",{["Difficulty"] = "Infinite",["FriendsOnly"] = _G.FriendOnly,["MapName"] = "Infinite Mode",["Hardcore"] = false})
+                        elseif _G.AutoTraitTokens == true and _G.RaidOpened == false then
+                            game:GetService("TeleportService"):Teleport(6990129309)
                         elseif _G.AutoSpeedRaid == true and game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.PlayButtonsFrame.Frame.SpeedRaidBanner.SpeedRaidBannerOpenText.Text == "Ready to enter" then
                             for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.CenterUIFrame.SpeedRaidCharacterSelector.Shade.SpeedRaidCharacterInventoryScrollingFrame:GetChildren()) do
                                 if v.ClassName == "ImageButton" then
@@ -1293,46 +1293,6 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
         end)
     end)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     local TabSetting = Window:CreateTab("Misc")
     local Setting1 = TabSetting:CreateSector("Section1", "left")
     Setting1:AddTextbox("Speed" , "16" , function(w)
@@ -1341,6 +1301,9 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
     Setting1:AddTextbox("Jump" , "50" , function(w)
         _G.Jump = w
     end)
+    --Setting1:AddToggle("Raid Challenge", false , function(t)
+        
+    --end)
     Setting1:AddToggle("WalkSpeed", false, function(t)
 		_G.WalkSpeed = t
 	end)
