@@ -1301,9 +1301,9 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
     Setting1:AddTextbox("Jump" , "50" , function(w)
         _G.Jump = w
     end)
-    --Setting1:AddToggle("Raid Challenge", false , function(t)
-        
-    --end)
+    Setting1:AddToggle("Raid Challenge", false , function(t)
+        _G.AutoTraitTokens = t
+    end)
     Setting1:AddToggle("WalkSpeed", false, function(t)
 		_G.WalkSpeed = t
 	end)
