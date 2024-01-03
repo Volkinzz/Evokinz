@@ -19,7 +19,7 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
         end
     end
     local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/SmellLikeHacker/IDK/main/GUI56"))()
-    local Window = library:CreateWindow("Evokinz2 ")
+    local Window = library:CreateWindow("SLH Hub | ".."AnimeDimensions".." | V1.52")
     local Tab1 = Window:CreateTab("Main")
 	local Sector1 = Tab1:CreateSector("Farming", "left")
     Sector1:AddDropdown("MapSelection(AutoUpdate!)",MapSelection, false ,false , function(v)
@@ -52,13 +52,13 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
 
 
     local Sector2 = Tab1:CreateSector("InGame", "Right")
-    Sector2:AddDropdown("Method",{"Behind" , "Front" , "Over" , "Under" }, "Over" ,false , function(v)
+    Sector2:AddDropdown("Method",{"Behind" , "Front" , "Over" , "Under" }, "Behind" ,false , function(v)
         _G.Method = v
     end)
-    Sector2:AddTextbox("ImportDistance(OnlyNumber)" , "12" , function(w)
+    Sector2:AddTextbox("ImportDistance(OnlyNumber)" , "6" , function(w)
         _G.Distance = tonumber(w)
     end)
-    Sector2:AddTextbox("TweenSpeed(OnlyNumber)" , "300" , function(w)
+    Sector2:AddTextbox("TweenSpeed(OnlyNumber)" , "200" , function(w)
         _G.TWSpeed = w
     end)
 	Sector2:AddToggle("AutoMob", false, function(t)
@@ -82,6 +82,7 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
 
     local Tab2 = Window:CreateTab("More")
     local Sector1 = Tab2:CreateSector("JoiningCombo", "left")
+    Sector1:AddLabel("JoinRaidLobby To ShowRaid",true)
     Sector1:AddDropdown("RaidSelection",RaidSelection, false ,false , function(v)
         _G.RaidSelection = v
     end)
@@ -97,11 +98,18 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
     Sector1:AddToggle("BossRush", false, function(t)
 		_G.BossRush = t
 	end)
-    Sector1:AddToggle("AutoSpeedRaid", false, function(t)
+    Sector1:AddToggle("AutoSpeedRaid(RandomSelect)", false, function(t)
 		_G.AutoSpeedRaid = t
 	end)
-    Sector1:AddToggle("AutoTraitTokens", false, function(t)
+    Sector1:AddToggle("AutoTraitTokens(Need LV:20)", false, function(t)
 		_G.AutoTraitTokens = t
+	end)
+    local Sector1 = Tab2:CreateSector("AutoEventMadokiRaid", "left")
+    Sector1:AddToggle("MadokiRaid(Need Raid Token)", false, function(t)
+		_G.AutoMadokiRaid = t
+	end)
+    Sector1:AddToggle("JoinMadokiRaid(AutoJoinRaidLobby)", false, function(t)
+		_G.AutoJoinMadokiRaid = t
 	end)
     local Sector4 = Tab2:CreateSector("MoreFunction", "Right")
     Sector4:AddToggle("AutoDodgeSkill", false, function(t)
@@ -180,10 +188,10 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
 
     local Tab9 = Window:CreateTab("Setting")
     local Sector1 = Tab9:CreateSector("Setting DodgeSkill", "left")
-    Sector1:AddTextbox("SizeDodgePart " , "3.5" , function(w)
+    Sector1:AddTextbox("SizeDodgePart (OnlyNumber)" , "3.5" , function(w)
         _G.SizeDodgePart = w
     end)
-    Sector1:AddTextbox("SizeDodgePart Y " , "100" , function(w)
+    Sector1:AddTextbox("SizeDodgePart Y (OnlyNumber)" , "100" , function(w)
         _G.SizeDodgePartY = w
     end)
     Sector1:AddTextbox("TweenSpeedDodgePart (Sec)" , "0.25" , function(w)
@@ -226,7 +234,7 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
     Sector1:AddToggle("BuyRushTicket", false, function(t)
 		_G.BuyRushTicket = t
 	end)
-    Sector1:AddToggle("BuyMadokiKey", false, function(t)
+    Sector1:AddToggle("BuyMadokiKey(Raid Token)", false, function(t)
 		_G.BuyKey = t
 	end)
     local Tab11 = Window:CreateTab("Webhook")
@@ -279,7 +287,7 @@ function hopserver()local v0=game.PlaceId;local v1={};local v2="";local v3=os.da
             while wait(1) do
                 spawn(function()
                     if _G.BuyKey == true then
-                        game:GetService("ReplicatedStorage").RemoteFunctions.MainRemoteFunction:InvokeServer("BuyRaidShopItem","Over Heaven Key (2 Per Day)")
+                        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("MainRemoteFunction"):InvokeServer({[1] = "BuyRaidShopItem",[2] = "Madoki Raid Key (2 Per Day)"})
                     end
                 end)
             end
