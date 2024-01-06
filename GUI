@@ -3478,5 +3478,6 @@ if not game:GetService("CoreGui"):FindFirstChild("Credit") then
 	TexT.TextWrapped = true;
     loadstring(game:HttpGet("https://raw.githubusercontent.com/SmellLikeHacker/IDK/main/Notification"))();
     wait()
+    Notification(1, "SmellLikehacker Hub", "Executed!", 10);
 end
 return library;
