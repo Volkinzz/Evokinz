@@ -1,0 +1,327 @@
+local ArrayField = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/ArrayField/main/Source.lua'))()
+local Window = ArrayField:CreateWindow({
+   Name = "Anime Switch SOLARA",
+   LoadingTitle = "Volkinz",
+   LoadingSubtitle = "By Volks",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "ArrayVolks", -- Create a custom folder for your hub/game
+      FileName = "SwitchSaves"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided",
+      FileName = "Key", -- It is recommended to use something unique as other scripts using ArrayField may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like ArrayField to get the key from
+      Actions = {
+            [1] = {
+                Text = 'Click here to copy the key link <--',
+                OnPress = function()
+                    print('Pressed')
+                end,
+                }
+            },
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+Window:Prompt({
+    Title = 'Interface Prompt',
+    SubTitle = 'SubTitle',
+    Content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    Actions = {
+        Accept = {
+            Name = 'Accept',
+            Callback = function()
+                print('Pressed')
+            end,
+        }
+    }
+})
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local Workspace = game:GetService("Workspace")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local primaryPart = character:WaitForChild("HumanoidRootPart")
+local localPlayer = game.Players.LocalPlayer
+
+
+_G.Height = 7  
+
+
+local function autoFarm()
+    while _G.autoFarm do
+        local mobsFolder = workspace:WaitForChild("Alive")
+        local targetMob = nil
+        for _, object in pairs(mobsFolder:GetChildren()) do
+            if object:IsA("Model") and object.Name ~= localPlayer.Name then
+                targetMob = object
+                break
+            end
+        end
+        if targetMob then
+            local targetPosition = targetMob.PrimaryPart.Position + Vector3.new(0, _G.Height, 0)
+            local humanoidRootPart = localPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if humanoidRootPart then
+                -- Define o goalCFrame com a posição do target
+                local goalCFrame = CFrame.new(targetPosition) * CFrame.Angles(math.rad(-90), 0, 0) -- Ajuste a orientação conforme necessário
+
+                local tweenInfo = TweenInfo.new(
+                    0.1, 
+                    Enum.EasingStyle.Linear, 
+                    Enum.EasingDirection.Out 
+                )
+                local goal = {CFrame = goalCFrame}
+                local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
+                tween:Play()
+                local BeenASecond, V3 = false, Vector3.new(0, 0, 0)
+                for _, v in ipairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.Velocity = V3
+                        v.RotVelocity = V3
+                        v.AssemblyAngularVelocity = V3
+                        v.AssemblyLinearVelocity = V3
+                    end
+                end
+            end
+        end
+        wait(0.1)
+	end
+end
+
+local function ToggleAutoFarm(value)
+    _G.autoFarm = value
+    if value then
+        autoFarm()
+    end
+end
+
+local function stageChoose(stage)
+    if stage == "Act 1" then
+        target = workspace.Map.Extra.Trigger1.Trigger 
+        local triggerFolder = workspace.Map.Extra.Trigger1
+    end
+    if stage == "Act 2" then
+        target = workspace.Map.Extra.Trigger2.Trigger 
+        local triggerFolder = workspace.Map.Extra.Trigger2
+    end
+    if stage == "Act 3" then
+        target = workspace.Map.Extra.Trigger3.Trigger 
+        local triggerFolder = workspace.Map.Extra.Trigger3
+    end
+    if stage == "Act 4" then
+        target = workspace.Map.Extra.Trigger4.Trigger 
+        local triggerFolder = workspace.Map.Extra.Trigger4
+    end
+    if stage == "Act 5" then
+        target = workspace.Map.Extra.Trigger5.Trigger
+        local triggerFolder = workspace.Map.Extra.Trigger5 
+    end
+    return target
+end
+
+function startStage() -- bleach
+    local Players = game:GetService("Players")
+    local TweenService = game:GetService("TweenService")
+
+    local player = Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    local aliveFolder = workspace.Alive
+    -- Função para verificar se há modelos em Alive além do jogador
+    local function hasOtherModels()
+        for _, child in ipairs(aliveFolder:GetChildren()) do
+            if child:IsA("Model") and child ~= character then
+                return true
+            end
+        end
+        print('Já tem mob spawnado ERRO FUNCTION HasOtherModels')
+        return false
+    end
+    local function hasOtherTriggers()
+        for _, child in ipairs(triggerFolder:GetChildren()) do
+            if child:IsA("Model") and child ~= character then
+                return true
+            end
+        end
+        print('O trigger d spawna já n existe mais ERRO FUNCTION HasOtherTrigers')
+        return false
+    end
+
+    -- Verifica se há outros modelos
+    if not hasOtherModels() and hasOtherTriggers()  then
+        -- Define as propriedades do Tween
+        local tweenInfo = TweenInfo.new(
+            2, -- Duração em segundos
+            Enum.EasingStyle.Linear, -- Estilo de easing
+            Enum.EasingDirection.Out, -- Direção de easing
+            0, -- Número de repetições
+            false, -- Reversão
+            0 -- Delay
+        )
+
+        -- Define a posição alvo do Tween
+        local goal = {}
+        goal.CFrame = target.CFrame
+
+        -- Cria e executa o Tween
+        local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
+        tween:Play()
+    end
+end
+
+function autoM1()
+    while _G.m1 == true do
+        local args = {
+        [1] = "M1",
+        [2] = "D",
+        [3] = workspace,
+        [4] = CFrame.new(92.94579315185547, 3.8182358741760254, -1995.909423828125) * CFrame.Angles(-0.2528255879878998, 0.6576791405677795, 0.1566333770751953)
+        }
+        game:GetService("ReplicatedStorage").RemoteObjects.KeyInputs:FireServer(unpack(args))
+        wait(0.1)   
+    end
+end
+function autoA1()
+    while _G.a1 == true do
+        local args = {
+        [1] = "A1",
+        [2] = "D",
+        [3] = workspace,
+        [4] = CFrame.new(92.94579315185547, 3.8182358741760254, -1995.909423828125) * CFrame.Angles(-0.2528255879878998, 0.6576791405677795, 0.1566333770751953)
+        }
+        game:GetService("ReplicatedStorage").RemoteObjects.KeyInputs:FireServer(unpack(args))
+        wait(0.1)   
+    end
+end
+function autoA2()
+    while _G.a2 == true do
+        local args = {
+        [1] = "A2",
+        [2] = "D",
+        [3] = workspace,
+        [4] = CFrame.new(92.94579315185547, 3.8182358741760254, -1995.909423828125) * CFrame.Angles(-0.2528255879878998, 0.6576791405677795, 0.1566333770751953)
+        }
+        game:GetService("ReplicatedStorage").RemoteObjects.KeyInputs:FireServer(unpack(args))
+        wait(0.1)   
+    end
+end
+function autoA3()
+    while _G.a3 == true do
+        local args = {
+        [1] = "A3",
+        [2] = "D",
+        [3] = workspace,
+        [4] = CFrame.new(92.94579315185547, 3.8182358741760254, -1995.909423828125) * CFrame.Angles(-0.2528255879878998, 0.6576791405677795, 0.1566333770751953)
+        }
+        game:GetService("ReplicatedStorage").RemoteObjects.KeyInputs:FireServer(unpack(args))
+        wait(0.1)   
+    end
+end
+function autoA4()
+    while _G.a4 == true do
+        local args = {
+        [1] = "A4",
+        [2] = "D",
+        [3] = workspace,
+        [4] = CFrame.new(92.94579315185547, 3.8182358741760254, -1995.909423828125) * CFrame.Angles(-0.2528255879878998, 0.6576791405677795, 0.1566333770751953)
+        }
+        game:GetService("ReplicatedStorage").RemoteObjects.KeyInputs:FireServer(unpack(args))
+        wait(0.1)   
+    end
+end
+
+-- ITENS INTERATIVOS
+local Tab = Window:CreateTab("Menu", 4483362458) -- Title, Image
+local Section = Tab:CreateSection("Auto Farm",true) -- The 2nd argument is to tell if its only a Title and doesnt contain element
+local Toggle = Tab:CreateToggle({ 
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        ToggleAutoFarm(Value)
+    end,
+})
+local Toggle = Tab:CreateToggle({ 
+    Name = "Auto Stage",
+    CurrentValue = false,
+    Flag = "Toggle2",
+    Callback = function(Value)
+        startStage()
+    end,
+})
+local Dropdown = Tab:CreateDropdown({
+    Name = "Dropdown Example",
+    Options = {"Option 1","Option 2","Option 3","Option 4","Option 5"},
+    CurrentOption = "Option 1" or {"Option 1","Option 3"},
+    MultiSelection = false, -- If MultiSelections is allowed
+    Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        stageChoose(Option)
+    end,
+})
+local Slider = Tab:CreateSlider({
+    Name = "Height",
+    Range = {0, 20},
+    Increment = 1,
+    Suffix = "Height",
+    CurrentValue = 7,
+    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.Height = Value
+    end,
+})
+local Toggle = Tab:CreateToggle({
+    Name = "M1",
+    CurrentValue = false,
+    Flag = "Toggle3", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.m1 = Value
+        autoM1()
+    end,
+})
+local Toggle = Tab:CreateToggle({
+    Name = "Skill 1",
+    CurrentValue = false,
+    Flag = "Toggle4", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.a1 = Value
+        autoA1()
+    end,
+})
+local Toggle = Tab:CreateToggle({
+    Name = "Skill 2",
+    CurrentValue = false,
+    Flag = "Toggle5", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.a2 = Value
+        autoA2()
+    end,
+})
+local Toggle = Tab:CreateToggle({
+    Name = "Skill 3",
+    CurrentValue = false,
+    Flag = "Toggle6", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.a3 = Value
+        autoA3()
+    end,
+})
+local Toggle = Tab:CreateToggle({
+    Name = "Skill 4",
+    CurrentValue = false,
+    Flag = "Toggle7", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.a4 = Value
+        autoA4()
+    end,
+})
+ArrayField:LoadConfiguration() 
