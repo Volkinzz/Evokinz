@@ -3456,7 +3456,7 @@ if not game:GetService("CoreGui"):FindFirstChild("Credit") then
 	Text.Size = UDim2.new(1, 0, 1, 0);
 	Text.Font = Enum.Font.PermanentMarker;
 	Text.Text = "Thank for using";
-	Text.TextColor3 = Color3.fromRGB(74, 50, 163);
+	Text.TextColor3 = Color3.fromRGB(255, 121, 230);
 	Text.TextScaled = true;
 	Text.TextWrapped = true;
 	FRAMe.Name = "FRAMe";
@@ -3472,8 +3472,8 @@ if not game:GetService("CoreGui"):FindFirstChild("Credit") then
 	TexT.Position = UDim2.new(0.5, 0, 0.5, 0);
 	TexT.Size = UDim2.new(1, 0, 1, 0);
 	TexT.Font = Enum.Font.PermanentMarker;
-	TexT.Text = "DC: VOLKINZ";
-	TexT.TextColor3 = Color3.fromRGB(74, 50, 163);
+	TexT.Text = "YT: SmellLikeHacker";
+	TexT.TextColor3 = Color3.fromRGB(255, 0, 4);
 	TexT.TextScaled = true;
 	TexT.TextWrapped = true;
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Volkinzz/Evokinz/main/Notification"))();
