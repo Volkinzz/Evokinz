@@ -10,6 +10,15 @@ local primaryPart = character:WaitForChild("HumanoidRootPart")
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local localPlayer = game.Players.LocalPlayer
 local ActChoose = workspace
+local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus or fluxus.queue_on_teleport
+    local teleportscripts = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Volkinzz/Evokinz/main/animeSwitch'))()"
+    if shared.AutoLoad then
+error("AutoLoad Execute")
+return
+else
+shared.AutoLoad = true
+end
+queueteleport(teleportscripts)
 if game.PlaceId ~= 9704927237 then
     
     local Tab1 = Window:CreateTab("Farmzada")
